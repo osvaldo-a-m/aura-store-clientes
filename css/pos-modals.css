@@ -1,0 +1,239 @@
+/* ==========================================
+   PAYMENT METHOD MODALS
+   ========================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-payment,
+.modal-transfer {
+    background: var(--color-surface);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-2xl);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.modal-header h2 {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    margin: 0;
+}
+
+.modal-body {
+    padding: var(--space-6);
+}
+
+.modal-footer {
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+}
+
+/* Payment Options Grid */
+.payment-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+}
+
+.payment-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-6) var(--space-4);
+    background: var(--color-bg-secondary);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-weight: 600;
+}
+
+.payment-option:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.payment-option:active {
+    transform: translateY(0);
+}
+
+.payment-icon {
+    font-size: var(--text-6xl);
+}
+
+.payment-label {
+    font-size: var(--text-base);
+    color: var(--color-text);
+}
+
+/* Transfer Info Styles */
+.transfer-info {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.transfer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.transfer-row:last-child {
+    border-bottom: none;
+}
+
+.transfer-row strong {
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+}
+
+.transfer-row span {
+    font-size: var(--text-base);
+    font-weight: 600;
+}
+
+.transfer-row .highlight {
+    color: var(--color-primary-light);
+    font-family: 'Courier New', monospace;
+    font-size: var(--text-lg);
+    font-weight: 700;
+}
+
+.transfer-note {
+    padding: var(--space-4);
+    background: rgba(139, 92, 246, 0.1);
+    border-left: 4px solid var(--color-primary);
+    border-radius: var(--radius-md);
+}
+
+.transfer-note p {
+    margin: 0;
+    font-size: var(--text-sm);
+}
+
+.transfer-note strong {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--color-primary-light);
+}
+
+/* Cart Item Remove Button */
+.btn-remove-item {
+    background: var(--color-danger);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remove-item:hover {
+    background: var(--color-danger-dark, #dc2626);
+    transform: scale(1.05);
+}
+
+.btn-remove-item:active {
+    transform: scale(0.95);
+}
+
+/* Remove old cart-item click behavior */
+.cart-item {
+    cursor: default;
+}
+
+.cart-item:hover::after {
+    display: none;
+}
+
+/* Mobile Responsiveness for Modals */
+@media (max-width: 640px) {
+    .payment-options {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .payment-option {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: var(--space-4);
+    }
+
+    .payment-icon {
+        font-size: var(--text-4xl);
+    }
+
+    .modal-payment,
+    .modal-transfer {
+        width: 95%;
+        max-height: 80vh;
+    }
+
+    .transfer-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+    }
+
+    .transfer-row span {
+        text-align: left;
+    }
+}

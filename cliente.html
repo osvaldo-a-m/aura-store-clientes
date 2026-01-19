@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Catálogo de Productos - Aura Store">
+    <meta name="theme-color" content="#8b5cf6">
+    <title>Catálogo - Aura Store</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/cliente.css">
+    <link rel="stylesheet" href="css/mobile-optimizations.css">
+</head>
+
+<body>
+
+    <div class="catalogo-container">
+
+        <!-- ==========================================
+         HEADER
+         ========================================== -->
+        <header class="catalogo-header">
+            <h1>✨ Aura Store</h1>
+            <p>Descubre nuestros productos disponibles</p>
+        </header>
+
+        <!-- ==========================================
+         GRID DE PRODUCTOS
+         ========================================== -->
+        <div id="productos-container">
+            <!-- Loading State -->
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p class="loading-text">Cargando productos...</p>
+            </div>
+            <!-- Grid de productos -->
+            <div class="productos-grid" id="productos-grid">
+                <!-- Loading skeleton -->
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton-content">
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton-footer">
+                            <div class="skeleton skeleton-price"></div>
+                            <div class="skeleton skeleton-badge"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paginación -->
+            <div class="pagination-container" id="pagination-container" style="display: none;">
+                <div class="pagination-info">
+                    <span id="pagination-info"></span>
+                </div>
+                <div class="pagination-buttons" id="pagination-buttons"></div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+         FOOTER
+         ========================================== -->
+        <footer class="catalogo-footer">
+            <p>💚 Actualización en tiempo real • Precios y disponibilidad pueden variar</p>
+            <p style="margin-top: var(--space-2); font-size: var(--text-xs); opacity: 0.7;">
+                Aura Store © 2026
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- ==========================================
+       BOTÓN FLOTANTE DEL CARRITO
+       ========================================== -->
+    <button id="btn-carrito" class="btn-carrito-flotante">
+        <span class="carrito-icon">🛒</span>
+        <div class="carrito-info">
+            <span class="carrito-label">Mi Carrito</span>
+            <span id="carrito-total" class="carrito-total-btn">$0.00</span>
+        </div>
+        <span id="carrito-badge" class="carrito-badge" style="display: none;">0</span>
+    </button>
+
+    <!-- ==========================================
+       SIDEBAR DEL CARRITO
+       ========================================== -->
+    <div id="carrito-sidebar" class="carrito-sidebar">
+        <div class="carrito-header">
+            <h2>🛒 Mi Carrito</h2>
+            <button id="btn-cerrar-carrito" class="btn-cerrar">✕</button>
+        </div>
+
+        <div id="carrito-items" class="carrito-items-container">
+            <!-- Items del carrito se renderizan aquí -->
+        </div>
+
+        <div class="carrito-footer">
+            <div class="carrito-total-section">
+                <span class="carrito-total-label">Total:</span>
+                <span id="carrito-total-amount" class="carrito-total-amount">$0.00</span>
+            </div>
+            <button id="btn-confirmar-pedido" class="btn btn-success" disabled>
+                ✅ Confirmar Pedido
+            </button>
+            <button id="btn-vaciar-carrito" class="btn btn-secondary">
+                🗑️ Vaciar Carrito
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       MODAL DE PEDIDO
+       ========================================== -->
+    <div id="modal-pedido" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📋 Confirmar Pedido</h2>
+                <button id="btn-cerrar-modal" class="btn-cerrar">✕</button>
+            </div>
+
+            <form id="form-pedido" class="modal-body">
+                <!-- Nombre del Cliente -->
+                <div class="form-group">
+                    <label for="input-cliente" class="label">Nombre Completo *</label>
+                    <input type="text" id="input-cliente" name="cliente" class="input" placeholder="Ej: Juan Pérez"
+                        required minlength="2">
+                </div>
+
+                <!-- Tiempo de Llegada -->
+                <div class="form-group">
+                    <label for="input-tiempo" class="label">¿Cuándo llegarás? *</label>
+                    <select id="input-tiempo" name="tiempo_llegada" class="input" required>
+                        <option value="">Selecciona un tiempo</option>
+                        <option value="15 minutos">En 15 minutos</option>
+                        <option value="30 minutos">En 30 minutos</option>
+                        <option value="1 hora">En 1 hora</option>
+                    </select>
+                </div>
+
+                <!-- Método de Pago -->
+                <div class="form-group">
+                    <label class="label">Método de Pago *</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="metodo_pago" value="transferencia" required>
+                            <span>💳 Transferencia Bancaria</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="metodo_pago" value="efectivo" required>
+                            <span>💵 Efectivo en tienda</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Datos Bancarios (se muestra solo si elige transferencia) -->
+                <div id="datos-bancarios" class="datos-bancarios" style="display: none;">
+                    <div class="alert alert-info">
+                        <h4>📱 Datos para Transferencia</h4>
+                        <div class="datos-bancarios-content">
+                            <p><strong>Banco:</strong> <span id="banco-nombre">Cargando...</span></p>
+                            <p><strong>Titular:</strong> <span id="banco-titular">Cargando...</span></p>
+                            <p><strong>Cuenta:</strong> <span id="banco-cuenta">Cargando...</span></p>
+                            <p><strong>CLABE:</strong> <span id="banco-clabe">Cargando...</span></p>
+                        </div>
+                        <p style="margin-top: var(--space-3); font-size: var(--text-sm); opacity: 0.8;">
+                            Por favor, envía el comprobante por WhatsApp al recoger tu pedido.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botón Submit -->
+                <button type="submit" class="btn btn-primary btn-block">
+                    🚀 Enviar Pedido
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       SCRIPTS
+       ========================================== -->
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Configuración y Módulos -->
+    <script src="config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/pedidos.js"></script>
+    <script src="js/cliente.js"></script>
+
+    <!-- Script de inicialización de datos bancarios -->
+    <script>
+        // Actualizar datos bancarios en el modal cuando se cargue
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('banco-nombre').textContent = CONFIG.BANCO.NOMBRE;
+            document.getElementById('banco-titular').textContent = CONFIG.BANCO.TITULAR;
+            document.getElementById('banco-cuenta').textContent = CONFIG.BANCO.CUENTA;
+            document.getElementById('banco-clabe').textContent = CONFIG.BANCO.CLABE;
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,451 @@
+/**
+ * Optimizaciones Móviles para Chrome y Safari
+ * ===========================================
+ * Estilos específicos para mejorar la experiencia en dispositivos móviles
+ * con Chrome (Android) y Safari (iOS)
+ */
+
+/* ==========================================
+   OPTIMIZACIONES WEBKIT (Safari iOS)
+   ========================================== */
+
+/* Deshabilitar zoom en doble tap (Safari iOS) */
+* {
+    -webkit-tap-highlight-color: rgba(139, 92, 246, 0.2);
+    -webkit-touch-callout: none;
+}
+
+/* Optimizar scroll en iOS */
+.pos-main,
+.cart-items,
+.table-container,
+.producto-suggestions,
+.pedidos-container {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Mejorar renderizado de fuentes en Safari */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Prevenir selección accidental de texto */
+.btn,
+.cart-item-controls button,
+.pedido-card,
+.producto-card,
+.suggestion-item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Permitir selección en inputs y áreas de texto */
+input,
+textarea,
+.cart-item-name,
+.producto-nombre {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+/* ==========================================
+   OPTIMIZACIONES CHROME MOBILE (Android)
+   ========================================== */
+
+/* Mejorar performance de animaciones */
+.cart-item,
+.pedido-card,
+.producto-card,
+.btn {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Optimizar transiciones en Chrome mobile */
+@media (max-width: 640px) {
+    * {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+/* ==========================================
+   FIX PARA 100VH EN SAFARI iOS
+   ========================================== */
+
+/* Safari iOS tiene un bug con 100vh (barra de URL causa problemas) */
+@supports (-webkit-touch-callout: none) {
+    .pos-layout {
+        min-height: -webkit-fill-available;
+    }
+
+    .pos-cart {
+        max-height: calc(100vh - var(--space-12));
+        max-height: -webkit-fill-available;
+    }
+}
+
+/* ==========================================
+   INPUTS Y FORMULARIOS (iOS y Android)
+   ========================================== */
+
+/* Prevenir zoom automático en inputs en iOS */
+@media (max-width: 640px) {
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+        font-size: 16px !important;
+        /* iOS hace zoom si es menor a 16px */
+    }
+}
+
+/* Mejorar apariencia de inputs en Safari */
+input,
+textarea,
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Remover sombreado interior en iOS */
+input[type="text"],
+input[type="number"],
+input[type="search"] {
+    -webkit-appearance: none;
+    border-radius: var(--radius-md);
+}
+
+/* Eliminar botones de incremento/decremento en number inputs (Chrome/Safari) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Estilizar placeholder en Safari */
+::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+}
+
+::-webkit-input-placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+}
+
+/* ==========================================
+   SCROLLBARS (Webkit - Safari/Chrome)
+   ========================================== */
+
+/* Ocultar scrollbars en móvil pero mantener funcionalidad */
+@media (max-width: 640px) {
+
+    .cart-items::-webkit-scrollbar,
+    .pos-main::-webkit-scrollbar,
+    .table-container::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Scrollbars personalizados para desktop (Webkit) */
+@media (min-width: 641px) {
+
+    .cart-items::-webkit-scrollbar,
+    .pos-main::-webkit-scrollbar,
+    .table-container::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .cart-items::-webkit-scrollbar-track,
+    .pos-main::-webkit-scrollbar-track,
+    .table-container::-webkit-scrollbar-track {
+        background: var(--color-bg-secondary);
+        border-radius: var(--radius-full);
+    }
+
+    .cart-items::-webkit-scrollbar-thumb,
+    .pos-main::-webkit-scrollbar-thumb,
+    .table-container::-webkit-scrollbar-thumb {
+        background: var(--color-border);
+        border-radius: var(--radius-full);
+    }
+
+    .cart-items::-webkit-scrollbar-thumb:hover,
+    .pos-main::-webkit-scrollbar-thumb:hover,
+    .table-container::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary);
+    }
+}
+
+/* ==========================================
+   BOTONES Y ÁREAS TÁCTILES (iOS y Android)
+   ========================================== */
+
+@media (max-width: 640px) {
+
+    /* Aumentar área táctil de botones pequeños */
+    .btn-incrementar,
+    .btn-decrementar,
+    .btn-eliminar,
+    .btn-remove-item {
+        min-width: 44px;
+        min-height: 44px;
+        /* Tamaño mínimo recomendado por Apple y Google */
+    }
+
+    /* Botones principales más grandes en móvil */
+    .btn-primary,
+    .btn-success,
+    .btn-danger {
+        min-height: 48px;
+        font-size: var(--text-base);
+    }
+
+    /* Mejorar táctiles de cards */
+    .pedido-card,
+    .cart-item,
+    .suggestion-item {
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(139, 92, 246, 0.1);
+    }
+}
+
+/* Feedback táctil mejorado */
+@media (hover: none) and (pointer: coarse) {
+    .btn:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+
+    .cart-item-controls button:active {
+        transform: scale(0.9);
+    }
+}
+
+/* ==========================================
+   SAFE AREA (iPhone X y posteriores)
+   ========================================== */
+
+/* Respeto por el notch y barra inferior en iOS */
+@supports (padding: max(0px)) {
+    .pos-layout {
+        padding-left: max(var(--space-6), env(safe-area-inset-left));
+        padding-right: max(var(--space-6), env(safe-area-inset-right));
+        padding-bottom: max(var(--space-6), env(safe-area-inset-bottom));
+    }
+
+    .pos-header {
+        padding-top: max(var(--space-6), env(safe-area-inset-top));
+    }
+
+    @media (max-width: 640px) {
+        .pos-layout {
+            padding-left: max(var(--space-2), env(safe-area-inset-left));
+            padding-right: max(var(--space-2), env(safe-area-inset-right));
+            padding-bottom: max(var(--space-2), env(safe-area-inset-bottom));
+        }
+    }
+}
+
+/* ==========================================
+   PREVENIR COMPORTAMIENTOS NO DESEADOS
+   ========================================== */
+
+/* Prevenir pull-to-refresh en Chrome Android */
+body {
+    overscroll-behavior-y: contain;
+}
+
+/* Prevenir rebote de scroll en Safari iOS */
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    overflow: auto;
+    height: 100%;
+}
+
+/* ==========================================
+   OPTIMIZACIONES DE RENDIMIENTO
+   ========================================== */
+
+/* Reducir repaints en scroll (Safari/Chrome) */
+.pos-cart {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+/* Mejorar performance de grid en móvil */
+@media (max-width: 640px) {
+
+    .productos-grid,
+    .pedidos-container {
+        will-change: scroll-position;
+    }
+}
+
+/* Optimizar transiciones costosas */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ==========================================
+   DARK MODE SUPPORT (Safari/Chrome)
+   ========================================== */
+
+/* Detectar preferencia de tema oscuro del sistema */
+@media (prefers-color-scheme: dark) {
+    /* Los estilos dark mode se aplicarían aquí si se implementa */
+    /* Por ahora, el sistema usa tema claro con modo oscuro */
+}
+
+/* ==========================================
+   FIX ESPECÍFICOS DE SAFARI
+   ========================================== */
+
+/* Fix para botones en Safari que no respetan border-radius */
+button {
+    -webkit-appearance: button;
+    border-radius: var(--radius-md);
+}
+
+/* Fix para inputs de archivo en Safari */
+input[type="file"] {
+    -webkit-appearance: none;
+}
+
+/* Prevenir zoom en landscape mode (Safari iOS) */
+@media (max-width: 640px) and (orientation: landscape) {
+
+    input,
+    select,
+    textarea {
+        font-size: 16px;
+    }
+}
+
+/* ==========================================
+   FIX ESPECÍFICOS DE CHROME MOBILE
+   ========================================== */
+
+/* Chrome mobile tiene problemas con position: sticky a veces */
+@supports (-webkit-sticky: sticky) {
+    .pos-cart {
+        position: -webkit-sticky;
+        position: sticky;
+    }
+}
+
+/* Mejorar contraste en Chrome mobile */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+screen and (min-resolution: 192dpi) {
+    body {
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+/* ==========================================
+   VIRTUAL KEYBOARD (iOS y Android)
+   ========================================== */
+
+/* Prevenir layout shift cuando aparece el teclado virtual */
+@media (max-width: 640px) {
+    .pos-layout {
+        position: relative;
+    }
+
+    /* Cuando un input tiene focus, ajustar layout */
+    input:focus,
+    textarea:focus {
+        scroll-margin-top: 100px;
+        scroll-margin-bottom: 100px;
+    }
+}
+
+/* ==========================================
+   PWA SUPPORT (Standalone Mode)
+   ========================================== */
+
+/* Estilos cuando se instala como PWA en iOS/Android */
+@media (display-mode: standalone) {
+    .pos-header {
+        padding-top: calc(var(--space-6) + env(safe-area-inset-top, 0px));
+    }
+
+    /* Ocultar elementos no necesarios en modo app */
+    .connection-status {
+        position: fixed;
+        top: env(safe-area-inset-top, 0px);
+        right: var(--space-4);
+        z-index: 1000;
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY (iOS VoiceOver / Android TalkBack)
+   ========================================== */
+
+/* Mejorar focus visible para navegación por teclado */
+@media (max-width: 640px) {
+    *:focus-visible {
+        outline: 3px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+
+    button:focus-visible,
+    .btn:focus-visible {
+        outline: 3px solid var(--color-primary);
+        outline-offset: 4px;
+    }
+}
+
+/* ==========================================
+   LANDSCAPE MODE OPTIMIZATIONS
+   ========================================== */
+
+@media (max-width: 640px) and (orientation: landscape) {
+
+    /* Reducir padding en landscape */
+    .pos-layout {
+        padding: var(--space-2);
+    }
+
+    .pos-header {
+        padding: var(--space-3);
+    }
+
+    /* Hacer el carrito más compacto en landscape */
+    .cart-total-amount {
+        font-size: var(--text-2xl);
+    }
+
+    /* Reducir altura de secciones */
+    .ventas-section,
+    .inventario-section,
+    .pedidos-section {
+        padding: var(--space-3);
+    }
+}
